@@ -4,34 +4,32 @@ module Formtastic
       index = options[:child_index] || "#{self.object.class.to_s}-#{self.object.object_id}"
       linker = ActiveSupport::SafeBuffer.new
       fields = ActiveSupport::SafeBuffer.new
+      
       ::I18n.available_locales.each do |locale|
+        active_class = ::I18n.locale == locale ? "in active" : ""
         linker << self.template.content_tag(:li,
           self.template.content_tag(:a,
             ::I18n.t("translation.#{locale}"),
-            :href => "#lang-#{locale}-#{index}"
-          )
+            :href => "#lang-#{locale}",
+            :"data-toggle" => "tab"
+          ),
+          class: "#{active_class}",
         )
         fields << self.template.content_tag(:div,
           self.semantic_fields_for(*(args.dup << self.object.translation_for(locale)), &proc),
-          :id => "lang-#{locale}-#{index}"
+          :id => "lang-#{locale}",
+          class: "tab-pane fade #{active_class}"
         )
       end
 
-      linker = self.template.content_tag(:ul, linker, :class => "language-selection")
+      linker = self.template.content_tag(:ul, linker, class: "nav nav-tabs language-selection")
+      fields = self.template.content_tag(:div, fields, class: "tab-content")
 
-      tabs_javascript = "
-        $('.language-tabs-#{index}').tabs().bind('tabsshow',function(event,ui){
-          for(var p in CKEDITOR.instances){
-            if (CKEDITOR.instances.hasOwnProperty(p)){
-              CKEDITOR.instances[p].resize(); 
-            }
-          }
-        });
-      "
-
-      # self.template.content_tag(:div, linker + fields, :class => "language-tabs-#{index}") + self.template.content_tag(:script, tabs_javascript.html_safe, :type => "text/javascript")
-      html = self.template.content_tag(:div, linker + fields, :class => "language-tabs-#{index}")
-      html << self.template.javascript_tag(tabs_javascript)
+      html = self.template.content_tag(:div,
+        linker + fields,
+        id: "language-tabs-#{index}",
+        class: "tabbable tabs-left"
+      )
     end
   end
 end

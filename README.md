@@ -1,18 +1,18 @@
-This small hack implements has_many friendly Globalize3 helper for ActiveAdmin.
+Esta pequena gem facilita a criação do formulário para integração com a globalização da gem [Globalize3](https://github.com/svenfuchs/globalize3/)
 
-Admittedly it generates structure that [jQueryUI tabs()](http://jqueryui.com/demos/tabs/) expect. However the whole idea is pretty simple and you should be able to change it to suit your needs.
+O Globalize Inpunts Bootstrap é uma alteração da gem [ActiveAdmin-Globalize3-inputs](https://github.com/corewebdesign/ActiveAdmin-Globalize3-inputs)
 
-## Installation
+## Instalação
 
-Add this line to your application's Gemfile:
+Adicione a seguinte linha ao seu Gemfile:
 
-    gem 'ActiveAdmin-Globalize3-inputs'
+    gem 'globalize3-inputs-bootstrap'
 
-And then execute:
+E execute o comando:
 
-    $ bundle
+    $ bundle install
 
-## Usage by example
+## Exemplo de uso
 
 ```ruby
 ActiveAdmin.register Gallery do
@@ -44,12 +44,10 @@ ActiveAdmin.register Gallery do
   end
 end
 ```
+Como você pode ver, não há nenhuma opção especial para as localidades. A lista é tirada de `I18n.available_locales`, então você provavelmente vai querer definir as localidades em que seu aplicativo funciona.
 
-As you can see, there's no special option for locales. The list is taken from `I18n.available_locales`, so you'd probably want to define the locales your application works with somewhere.
+## Contribua
 
-## Contributing
-
-1. Fork
-2. Invent better name
-3. Improve
-4. Enjoy
+1. Faça um 'Fork'
+2. Melhore
+3. Faça um 'Pull Request'
